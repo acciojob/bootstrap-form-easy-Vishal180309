@@ -1,53 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bootstrap Form</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <title>Internship Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        select,
+        input[type="checkbox"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        input[type="checkbox"] {
+            width: auto;
+        }
+
+        .invalid-feedback {
+            color: red;
+            font-size: 14px;
+            display: none;
+        }
+
+        .valid-feedback {
+            color: green;
+            font-size: 14px;
+            display: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .form-group.checkbox-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-group.checkbox-group label {
+            margin-left: 10px;
+        }
+    </style>
 </head>
+
 <body>
+
     <div class="container">
-        <form>
+        <h2>Internship Application Form</h2>
+        <form id="intern-form">
             <div class="form-group">
-                <label for="first-name-input">First Name:</label>
-                <input type="text" class="form-control" id="first-name-input">
+                <label for="first-name-input">First Name</label>
+                <input type="text" id="first-name-input" name="first-name" required>
+                <div class="invalid-feedback" id="first-name-feedback">First name is required.</div>
             </div>
+
             <div class="form-group">
-                <label for="last-name-input">Last Name:</label>
-                <input type="text" class="form-control" id="last-name-input">
+                <label for="last-name-input">Last Name</label>
+                <input type="text" id="last-name-input" name="last-name" required>
+                <div class="invalid-feedback" id="last-name-feedback">Last name is required.</div>
             </div>
+
             <div class="form-group">
-                <label for="email-input">Email:</label>
-                <input type="email" class="form-control" id="email-input">
+                <label for="email-input">Email</label>
+                <input type="email" id="email-input" name="email" required>
+                <div class="invalid-feedback" id="email-feedback">Please provide a valid email address.</div>
             </div>
+
             <div class="form-group">
-                <label for="college-input">College Name:</label>
-                <input type="text" class="form-control" id="college-input">
+                <label for="college-input">College Name</label>
+                <input type="text" id="college-input" name="college" required>
+                <div class="invalid-feedback" id="college-feedback">College name is required.</div>
             </div>
+
             <div class="form-group">
-                <label for="roll-no-input">Roll No:</label>
-                <input type="number" class="form-control" id="roll-no-input">
+                <label for="roll-no-input">Roll No</label>
+                <input type="text" id="roll-no-input" name="roll-no" required>
+                <div class="invalid-feedback" id="roll-no-feedback">Roll number is required.</div>
             </div>
+
             <div class="form-group">
-                <label for="graduation-year-input">Graduation Year:</label>
-                <select class="form-control" id="graduation-year-input">
+                <label for="graduation-year">Graduation Year</label>
+                <select id="graduation-year" name="graduation-year" required>
+                    <option value="">Select Year</option>
                     <option value="2020">2020</option>
                     <option value="2021">2021</option>
                     <option value="2022">2022</option>
                     <option value="2023">2023</option>
                 </select>
+                <div class="invalid-feedback" id="graduation-year-feedback">Please select a graduation year.</div>
             </div>
-            <div class="form-group">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="conditions-checkbox">
-                    <label class="form-check-label" for="conditions-checkbox">
-                        I agree to the terms and conditions.
-                    </label>
-                </div>
+
+            <div class="form-group checkbox-group">
+                <input type="checkbox" id="conditions-checkbox" name="conditions">
+                <label for="conditions-checkbox">I agree to the terms and conditions</label>
+                <div class="invalid-feedback" id="conditions-feedback">You must agree to the terms and conditions.</div>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+
+            <button type="submit">Submit</button>
         </form>
     </div>
+
+    <script>
+        document.getElementById('intern-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            let isValid = true;
+
+            // Clear all previous invalid feedback
+            document.querySelectorAll('.invalid-feedback').forEach((feedback) => {
+                feedback.style.display = 'none';
+            });
+
+            // Validate first name
+            const firstName = document.getElementById('first-name-input').value.trim();
+            if (!firstName) {
+                document.getElementById('first-name-feedback').style.display = 'block';
+                isValid = false;
+            }
+
+            // Validate last name
+            const lastName = document.getElementById('last-name-input').value.trim();
+            if (!lastName) {
+                document.getElementById('last-name-feedback').style.display = 'block';
+                isValid = false;
+            }
+
+            // Validate email
+            const email = document.getElementById('email-input').value.trim();
+            const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+            if (!email || !emailPattern.test(email)) {
+                document.getElementById('email-feedback').style.display = 'block';
+                isValid = false;
+            }
+
+            // Validate college name
+            const collegeName = document.getElementById('college-input').value.trim();
+            if (!collegeName) {
+                document.getElementById('college-feedback').style.display = 'block';
+                isValid = false;
+            }
+
+            // Validate roll number
+            const rollNo = document.getElementById('roll-no-input').value.trim();
+            if (!rollNo) {
+                document.getElementById('roll-no-feedback').style.display = 'block';
+                isValid = false;
+            }
+
+            // Validate graduation year
+            const graduationYear = document.getElementById('graduation-year').value;
+            if (!graduationYear) {
+                document.getElementById('graduation-year-feedback').style.display = 'block';
+                isValid = false;
+            }
+
+            // Validate terms and conditions checkbox
+            const conditionsCheckbox = document.getElementById('conditions-checkbox').checked;
+            if (!conditionsCheckbox) {
+                document.getElementById('conditions-feedback').style.display = 'block';
+                isValid = false;
+            }
+
+            if (isValid) {
+                alert('Form Submitted Successfully!');
+            }
+        });
+    </script>
+
 </body>
+
 </html>
